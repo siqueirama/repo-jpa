@@ -2,43 +2,37 @@ package enity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+
 
 @Data
 @Entity
+@Table(name = "anuncios")
 public class Anuncio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+ //   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String codigo;
-    
+
     private String titulo;
-    private String vendedorCodigo;
     private BigDecimal preco;
-    private String dataAnuncio;
+    private LocalDate dataAnuncio;
     private String numVendas;
 
-    public Anuncio(String codigo, String titulo, String vendedorCodigo, BigDecimal preco, String dataAnuncio, String numVendas) {
-        this.codigo = codigo;
-        this.titulo = titulo;
-        this.vendedorCodigo = vendedorCodigo;
-        this.preco = preco;
-        this.dataAnuncio = dataAnuncio;
-        this.numVendas = numVendas;
-    }
-
-    public Anuncio(String titulo, String vendedorCodigo, BigDecimal preco, String dataAnuncio, String numVendas) {
-        this.titulo = titulo;
-        this.vendedorCodigo = vendedorCodigo;
-        this.preco = preco;
-        this.dataAnuncio = dataAnuncio;
-        this.numVendas = numVendas;
-    }
+    @ManyToOne
+    private Vendedor vendedor;
 
     public Anuncio() {
     }
+
+    public Anuncio(String titulo, BigDecimal preco, LocalDate dataAnuncio, String numVendas, Vendedor vendedor) {
+        this.titulo = titulo;
+        this.preco = preco;
+        this.dataAnuncio = dataAnuncio;
+        this.numVendas = numVendas;
+        this.vendedor = vendedor;
+    }
+
 }

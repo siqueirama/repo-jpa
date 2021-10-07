@@ -1,84 +1,51 @@
 package enity;
 
+
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.List;
+
+
+@Data
+@Entity
+@Table(name = "vendedores")
 public class Vendedor {
 
-    String codigo;
-    String cpf;
-    String nome;
-    String endereco;
-    String uf;
-    String cidade;
+    @Id
+    private String codigo;
+    private String cpf;
+    private String nome;
 
-
-    public Vendedor(String codigo, String cpf, String nome, String endereco, String uf, String cidade) {
-        super();
-        this.codigo = codigo;
-        this.cpf = cpf;
-        this.nome = nome;
-        this.endereco = endereco;
-        this.uf = uf;
-        this.cidade = cidade;
-    }
-
-    public Vendedor(String cpf, String nome, String endereco, String uf, String cidade) {
-        super();
-        this.cpf = cpf;
-        this.nome = nome;
-        this.endereco = endereco;
-        this.uf = uf;
-        this.cidade = cidade;
-    }
+    @OneToMany(mappedBy = "vendedor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Endereco> endereco;
 
     public Vendedor() {
-
     }
 
-    public String getCodigo() {
-        return codigo;
-    }
-    public String getCpf() {
-        return cpf;
-    }
-    public String getNome() {
-        return nome;
-    }
-    public String getEndereco() {
-        return endereco;
-    }
-    public String getUf() {
-        return uf;
-    }
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCodigo(String codigo) {
+    public Vendedor(String codigo, String cpf, String nome, List<Endereco> endereco) {
+        super();
         this.codigo = codigo;
-    }
-
-    public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
-    public void setUf(String uf) {
-        this.uf = uf;
+    public Vendedor(String codigo, String cpf, String nome) {
+        this.codigo = codigo;
+        this.cpf = cpf;
+        this.nome = nome;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public Vendedor(String cpf, String nome, List<Endereco> endereco) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.endereco = endereco;
     }
 
-    @Override
-    public String toString() {
-        return this.codigo.concat(" -- " + this.nome).concat(" -- " + this.cpf).concat(" -- " + this.endereco).concat(" -- " + this.uf).concat(" -- " + this.cidade);
+    public Vendedor(String cpf, String nome) {
+        this.cpf = cpf;
+        this.nome = nome;
     }
 
 }

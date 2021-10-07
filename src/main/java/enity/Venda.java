@@ -11,26 +11,41 @@ import java.time.LocalDate;
 @Entity
 public class Venda {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
-    private LocalDate data;
-    private BigDecimal valorTotal;
-    private String formaPagamento;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+        private LocalDate data;
+        private BigDecimal valorTotal;
+        @Enumerated(EnumType.STRING)
+        private FormaPagamento formaPagamento;
 
-    public Venda(Long id, LocalDate data, BigDecimal valorTotal, String formaPagamento) {
-        this.id = id;
-        this.data = data;
-        this.valorTotal = valorTotal;
-        this.formaPagamento = formaPagamento;
-    }
+        @ManyToOne
+        private Vendedor vendedor;
 
-    public Venda() {
-    }
+        @ManyToOne
+        @JoinColumn(name = "anuncio_codigo")
+        private Anuncio anuncio;
 
-    public Venda(LocalDate data, BigDecimal valorTotal, String formaPagamento) {
-        this.data = data;
-        this.valorTotal = valorTotal;
-        this.formaPagamento = formaPagamento;
+
+        public Venda() {
+        }
+
+        public Venda(Long id, LocalDate data, BigDecimal valorTotal, FormaPagamento formaPagamento, Vendedor vendedor, Anuncio anuncio) {
+            super();
+            this.id = id;
+            this.data = data;
+            this.valorTotal = valorTotal;
+            this.formaPagamento = formaPagamento;
+            this.vendedor = vendedor;
+            this.anuncio = anuncio;
+        }
+        public Venda(LocalDate data, BigDecimal valorTotal, FormaPagamento formaPagamento, Vendedor vendedor, Anuncio anuncio) {
+            super();
+            this.data = data;
+            this.valorTotal = valorTotal;
+            this.formaPagamento = formaPagamento;
+            this.vendedor = vendedor;
+            this.anuncio = anuncio;
+        }
+
     }
-}

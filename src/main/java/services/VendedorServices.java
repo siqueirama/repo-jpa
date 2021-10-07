@@ -1,6 +1,7 @@
 package services;
 
 import dao.VendedorPersistence;
+import enity.Endereco;
 import enity.Vendedor;
 
 import java.util.List;
@@ -10,12 +11,16 @@ public class VendedorServices {
 
 
     private VendedorPersistence vendedorPersistence;
+    private Endereco endereco;
+
 
     public VendedorServices(VendedorPersistence vendedorPersistence) {
         this.vendedorPersistence = vendedorPersistence;
     }
 
-    public VendedorServices() {
+    public VendedorServices(VendedorPersistence vendedorPersistence, Endereco endereco) {
+        this.vendedorPersistence = vendedorPersistence;
+        this.endereco = endereco;
     }
 
 
@@ -23,28 +28,21 @@ public class VendedorServices {
         return "MLB" + ThreadLocalRandom.current().nextInt(100, 999);
     }
 
-    public void salva(Vendedor vendedor) {
+    public void insere(Vendedor vendedor) {
         if(vendedor.getCodigo()==null || vendedor.getCodigo().isEmpty()) {
             vendedor.setCodigo(codigoUnico());
             vendedorPersistence.insere(vendedor);
         }else{
             Vendedor vendedorExistente = vendedorPersistence.get(vendedor.getCodigo());
-            if(vendedorExistente == null){
-                throw new RuntimeException("Algo de muito errado aconteceu");
-            }
-            vendedorExistente.setCidade(vendedor.getCidade());
-            vendedorExistente.setCpf(vendedor.getCpf());
-            vendedorExistente.setEndereco(vendedor.getEndereco());
-            vendedorExistente.setNome(vendedor.getNome());
-            vendedorExistente.setUf(vendedor.getUf());
-            vendedorPersistence.atualiza(vendedorExistente);
+                if(vendedorExistente == null){
+                    vendedorPersistence.insere(vendedor);
+                }else{
+                throw new RuntimeException("Vendedor já Cadastrado!");
+             }
         }
     }
 
-    /**
-     *
-     * @return uma lista de vendedores ordenada (em ordem crescente) pelo nome
-     */
+
     public List<Vendedor> listagem(){
         List<Vendedor> lista = vendedorPersistence.lista();
         lista.sort((Vendedor v1, Vendedor v2) -> v1.getNome().compareToIgnoreCase(v2.getNome()));

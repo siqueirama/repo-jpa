@@ -26,9 +26,9 @@ public class AnuncioServices {
     }
 
     public void insere(Anuncio anuncio){
-      Vendedor vendedor = vendedorServices.obtem(anuncio.getVendedorCodigo());
-        if(vendedor == null){
-            throw new RuntimeException("Anuncio precisa ter um vendedor cadastrado");
+
+        if(anuncio.getVendedor() == null){
+            throw new RuntimeException("Anuncio precisa de um Vendedor cadastrado");
         }else{
             anuncio.setCodigo(codigoUnico());
             anuncioPersistence.insere(anuncio);

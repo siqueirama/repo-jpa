@@ -2,6 +2,7 @@ package dao;
 
 import enity.Anuncio;
 import enity.Venda;
+import enity.Vendedor;
 import util.BancoDeDados;
 import util.JPAUtil;
 
@@ -27,5 +28,9 @@ public class AnuncioPersistence {
         } catch (RuntimeException e) {
             em.getTransaction().rollback();
         }
+    }
+
+    public Anuncio getAnuncio(String codAnuncio) {
+        return em.find(Anuncio.class, codAnuncio);
     }
 }

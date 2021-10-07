@@ -2,7 +2,10 @@ package dao;
 
 import enity.Vendedor;
 import util.BancoDeDados;
+import util.JPAUtil;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,85 +17,50 @@ import java.util.List;
 public class VendedorPersistence {
 
     private Connection cnx;
+    private EntityManager em;
 
     public VendedorPersistence(){
-        try {
-            cnx = BancoDeDados.getConection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        em = JPAUtil.getEntityManager();
     }
 
+
     public void atualiza(Vendedor vendedor) {
-        try {
-            PreparedStatement ps = cnx.prepareStatement("update vendedores set cpf = ?, nome = ?, endereco = ?, uf = ?, cidade = ? where codigo = ?");
-            ps.setString(1, vendedor.getCpf());
-            ps.setString(2, vendedor.getNome());
-            ps.setString(3, vendedor.getEndereco());
-            ps.setString(4, vendedor.getUf());
-            ps.setString(5, vendedor.getCidade());
-            ps.setString(6, vendedor.getCodigo());
-            ps.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        em.getTransaction().begin();
+        vendedor.setCpf(vendedor.getCpf());
+        vendedor.setNome(vendedor.getNome());
+        em.getTransaction().commit();
     }
 
     public List<Vendedor> lista(){
-        List<Vendedor> vendedores = new ArrayList<Vendedor>();
-        try {
-            PreparedStatement ps = cnx.prepareStatement("select * from vendedores");
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                vendedores.add(new Vendedor(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return vendedores;
+        TypedQuery<Vendedor> qry = em.createQuery("From Vendedor", Vendedor.class);
+        return qry.getResultList();
     }
 
 
     public Vendedor get(String codigo) {
-
-        try {
-            PreparedStatement ps = cnx.prepareStatement("select * from vendedores where codigo = ?");
-            ps.setString(1, codigo);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                return new Vendedor(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return em.find(Vendedor.class, codigo);
     }
 
     public void insere(Vendedor vendedor) {
         try {
-            Connection cnx = BancoDeDados.getConection();
-            PreparedStatement ps = cnx.prepareStatement("insert into vendedores (codigo, cpf, nome, endereco, uf, cidade)"
-                    + " values (?,?,?,?,?,?)");
-            ps.setString(1, vendedor.getCodigo());
-            ps.setString(2, vendedor.getCpf());
-            ps.setString(3, vendedor.getNome());
-            ps.setString(4, vendedor.getEndereco());
-            ps.setString(5, vendedor.getUf());
-            ps.setString(6, vendedor.getCidade());
-            ps.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            em.getTransaction().begin();
+            em.persist(vendedor);
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            em.getTransaction().rollback();
         }
-
     }
 
     public void exclui(String codigo) {
         try {
-            PreparedStatement ps = cnx.prepareStatement("delete from vendedores where codigo = ?");
-            ps.setString(1, codigo);
-            ps.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            em.getTransaction().begin();
+            Vendedor vendedorDeletado = em.find(Vendedor.class, codigo);
+            em.remove(vendedorDeletado);
+            em.getTransaction().commit();
+        }catch (RuntimeException e){
+            em.getTransaction().rollback();
         }
+
+
     }
 }
