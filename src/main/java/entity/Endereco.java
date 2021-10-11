@@ -1,4 +1,4 @@
-package enity;
+package entity;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Endereco {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

@@ -1,8 +1,8 @@
 package services;
 
 import dao.VendedorPersistence;
-import enity.Endereco;
-import enity.Vendedor;
+import entity.Endereco;
+import entity.Vendedor;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -11,14 +11,14 @@ public class VendedorServices {
 
 
     private VendedorPersistence vendedorPersistence;
-    private Endereco endereco;
+    private List<Endereco> endereco;
 
 
     public VendedorServices(VendedorPersistence vendedorPersistence) {
         this.vendedorPersistence = vendedorPersistence;
     }
 
-    public VendedorServices(VendedorPersistence vendedorPersistence, Endereco endereco) {
+    public VendedorServices(VendedorPersistence vendedorPersistence, List<Endereco> endereco) {
         this.vendedorPersistence = vendedorPersistence;
         this.endereco = endereco;
     }

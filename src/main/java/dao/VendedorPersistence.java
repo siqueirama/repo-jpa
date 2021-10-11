@@ -1,22 +1,16 @@
 package dao;
 
-import enity.Vendedor;
-import util.BancoDeDados;
+import entity.Vendedor;
 import util.JPAUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class VendedorPersistence {
 
-    private Connection cnx;
     private EntityManager em;
 
     public VendedorPersistence(){
@@ -44,7 +38,8 @@ public class VendedorPersistence {
     public void insere(Vendedor vendedor) {
         try {
             em.getTransaction().begin();
-            em.persist(vendedor);
+         //   em.persist(vendedor);
+            em.merge(vendedor);
             em.getTransaction().commit();
         } catch (RuntimeException e) {
             em.getTransaction().rollback();

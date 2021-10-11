@@ -1,15 +1,9 @@
 package dao;
 
-import enity.FormaPagamento;
-import enity.Venda;
-import enity.Vendedor;
+import entity.Venda;
 import util.JPAUtil;
 
 import javax.persistence.*;
-import java.lang.reflect.Type;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
 public class VendaPersistence {
     private EntityManager em;
@@ -53,7 +47,7 @@ public class VendaPersistence {
     }
 
     public Venda buscaVenda(String codigoVen, String codigoAnun) {
-        TypedQuery<Venda> qry = em.createQuery("SELECT * FROM Venda v WHERE v.vendedor.codigo =: codigo1  AND v.anuncio_codigo =codigo2",Venda.class);
+        TypedQuery<Venda> qry = em.createQuery("SELECT * FROM Venda  WHERE vendedor.codigo =: codigo1  AND anuncio.codigo =:codigo2",Venda.class);
         qry.setParameter(1, codigoVen);
         qry.setParameter(2, codigoAnun);
         Venda venda = qry.getSingleResult();

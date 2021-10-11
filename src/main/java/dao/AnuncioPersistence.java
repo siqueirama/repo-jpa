@@ -1,15 +1,9 @@
 package dao;
 
-import enity.Anuncio;
-import enity.Venda;
-import enity.Vendedor;
-import util.BancoDeDados;
+import entity.Anuncio;
 import util.JPAUtil;
 
 import javax.persistence.EntityManager;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 
 public class AnuncioPersistence {

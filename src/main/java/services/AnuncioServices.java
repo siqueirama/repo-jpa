@@ -1,10 +1,7 @@
 package services;
 
 import dao.AnuncioPersistence;
-import dao.VendaPersistence;
-import dao.VendedorPersistence;
-import enity.Anuncio;
-import enity.Vendedor;
+import entity.Anuncio;
 
 import java.util.concurrent.ThreadLocalRandom;
 

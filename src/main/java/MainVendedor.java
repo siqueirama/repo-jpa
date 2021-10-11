@@ -1,6 +1,6 @@
 import dao.VendedorPersistence;
-import enity.Endereco;
-import enity.Vendedor;
+import entity.Endereco;
+import entity.Vendedor;
 import services.VendedorServices;
 
 import java.util.Arrays;
@@ -39,11 +39,12 @@ public class MainVendedor {
     private static void insercao() {
         VendedorPersistence vendedorPersistence = new VendedorPersistence();
         Vendedor vendedor = new Vendedor("000.654.123-90", "Cafu");
-        List<Endereco> enderecoNew = Arrays.asList(new Endereco("01118-888", "logradouro do wagner", "ap 3", 4005, "ES", "Vitória", vendedor));
+        //não gera o ID do endereço automaticoo
+        List<Endereco> endereco = Arrays.asList(new Endereco(2l,"01118-888", "logradouro do wagner", "ap 3", 4005, "ES", "Vitória", vendedor));
 
-        VendedorServices vendedorServices = new VendedorServices(vendedorPersistence);
+        VendedorServices vendedorServices = new VendedorServices(vendedorPersistence, endereco);
 
-        vendedor.setEndereco(enderecoNew);
+        vendedor.setEndereco(endereco);
         vendedorServices.insere(vendedor);
     }
 }

@@ -1,10 +1,10 @@
 import dao.AnuncioPersistence;
 import dao.VendaPersistence;
 import dao.VendedorPersistence;
-import enity.Anuncio;
-import enity.FormaPagamento;
-import enity.Venda;
-import enity.Vendedor;
+import entity.Anuncio;
+import entity.FormaPagamento;
+import entity.Venda;
+import entity.Vendedor;
 import services.VendaServices;
 
 import java.math.BigDecimal;

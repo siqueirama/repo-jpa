@@ -1,8 +1,7 @@
 import dao.AnuncioPersistence;
-import dao.VendaPersistence;
 import dao.VendedorPersistence;
-import enity.Anuncio;
-import enity.Vendedor;
+import entity.Anuncio;
+import entity.Vendedor;
 import services.AnuncioServices;
 import services.VendedorServices;
 
@@ -18,6 +17,6 @@ public class MainAnuncio {
         AnuncioServices anuncioServices = new AnuncioServices(vendedorServices, anuncioPersistence);
 
         Vendedor vendedor = vendedorPersistence.get("MLB325");
-        anuncioServices.insere(new Anuncio("Bola", new BigDecimal(800), LocalDate.now(),"10", vendedor));
+        anuncioServices.insere(new Anuncio("Bola", new BigDecimal(50), LocalDate.now(),"520", vendedor));
     }
 }

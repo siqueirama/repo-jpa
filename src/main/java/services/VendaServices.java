@@ -1,9 +1,7 @@
 package services;
 
 import dao.VendaPersistence;
-import dao.VendedorPersistence;
-import enity.Venda;
-import enity.Vendedor;
+import entity.Venda;
 
 public class VendaServices {
 
